@@ -10,22 +10,22 @@ import petstore.pet;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class testcase_pet_1 {
 
-    private pet petstore;
+    private pet pet_store;
 
     //Test-Data
-    int id = 355;
-    String post_name = "HUND";
-    String post_status = "sold";
+    int ID = 355;
+    String NAME = "Kuchen";
+    String PET_STATUS = "pending";
 
     @BeforeEach
-    public void init() { petstore = new pet(); }
+    public void init() { pet_store = new pet(); }
 
 
     @Test
     @Order(1)
-    @DisplayName("Post Pet")
+    @DisplayName("Add pet")
     void post_pet() {
-        String output[] = petstore.post_pet(id, post_name, post_status);
+        String[] output = pet_store.add_pet(ID, NAME, PET_STATUS);
         int status = Integer.parseInt(output[1]);
 
         Assertions.assertEquals(200, status);
@@ -35,26 +35,25 @@ public class testcase_pet_1 {
     @Order(2)
     @DisplayName("Get and Check Pet")
     void get_and_check(){
-       String output[] = petstore.get_pet_byID(id);
+       String[] output = pet_store.get_pet_byID(ID);
        int status = Integer.parseInt(output[1]);
        String return_message = output[0];
 
        Assertions.assertEquals(200, status);
 
-       String current_name = JsonPath.read(return_message, "$.name");
-       String current_status = JsonPath.read(return_message, "$.status");
+       String CURRENT_NAME = JsonPath.read(return_message, "$.name");
+       String CURRENT_STATUS = JsonPath.read(return_message, "$.status");
 
-       Assertions.assertEquals(post_name, current_name);
-       Assertions.assertEquals(post_status, current_status);
+       Assertions.assertEquals(NAME, CURRENT_NAME);
+       Assertions.assertEquals(PET_STATUS, CURRENT_STATUS);
     }
 
     @Test
     @Order(3)
     @DisplayName("Delete Pet")
     void delete_pet(){
-        String output[] = petstore.delete_pet(id);
+        String[] output = pet_store.delete_pet(ID);
         int status = Integer.parseInt(output[1]);
-        String return_message = output[0];
 
         Assertions.assertEquals(200, status);
 
@@ -65,9 +64,8 @@ public class testcase_pet_1 {
     @Order(4)
     @DisplayName("Check if Pet is deleted")
     void check_deleted_pet(){
-        String output[] = petstore.get_pet_byID(id);
+        String[] output = pet_store.get_pet_byID(ID);
         int status = Integer.parseInt(output[1]);
-        String return_message = output[0];
 
         Assertions.assertEquals(404, status);
     }

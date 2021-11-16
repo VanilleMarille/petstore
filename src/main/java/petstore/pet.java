@@ -1,292 +1,67 @@
 package petstore;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
+import REST.request;
 
 
 public class pet {
-    public static HttpURLConnection connection;
+
+    String URL =  ("https://petstore.swagger.io/v2/pet/");
 
     //GET /pet/{petID}
-    public String[] get_pet_byID(int id) {
-        String URL = ("https://petstore.swagger.io/v2/pet/" + id);
-        String output[] = get_request(URL);
-        return output;
+    public String[] get_pet_byID(int ID){
+        URL = (URL + ID);
+        String request_type = ("GET");
+        String data_out = ("Nothing");
+        String content_type = ("json");
+
+        return request.rest_request(URL, data_out, content_type, request_type);
     }
 
     //GET /pet/findByStatus
-    public String[] get_pet_byStatus(String pet_status) {
-        String URL = ("https://petstore.swagger.io/v2/pet/findByStatus?status=" + pet_status);
-        String output[] = get_request(URL);
-        return output;
+    public String[] get_pet_byStatus(String FIND_STATUS){
+        URL = (URL + "findByStatus?status=" + FIND_STATUS);
+        String request_type = ("GET");
+        String data_out = ("Nothing");
+        String content_type = "json";
+
+        return request.rest_request(URL, data_out, content_type, request_type);
     }
 
     //POST /pet
-    public String[] post_pet(int id, String name, String pet_status) {
-        String URL = ("https://petstore.swagger.io/v2/pet/");
-        String data = "{\"id\":" + id + ",\"category\":{\"id\":0,\"name\":\"string\"},\"name\":\"" + name + "\",\"photoUrls\":[\"string\"],\"tags\":[{\"id\":0,\"name\":\"string\"}],\"status\":\"" + pet_status + "\"}";
-        String output[] = post_request(URL, data);
-        return output;
-    }
+    public String[] add_pet(int ID, String NAME, String PET_STATUS){
+        String request_type = ("POST");
+        String data_out = "{\"id\":" + ID + ",\"category\":{\"id\":0,\"name\":\"string\"},\"name\":\"" + NAME + "\",\"photoUrls\":[\"string\"],\"tags\":[{\"id\":0,\"name\":\"string\"}],\"status\":\"" + PET_STATUS + "\"}";
+        String content_type = ("json");
 
-
-    //DELETE /pet/{petID}
-    public String[] delete_pet(int id) {
-        String URL = ("https://petstore.swagger.io/v2/pet/" + id);
-        String output[] = delete_request(URL);
-        return output;
-    }
-
-
-    //PUT /pet
-    public String[] update_pet_put(int id, String update_name, String update_status) {
-        String URL = ("https://petstore.swagger.io/v2/pet/");
-        String data = "{\"id\":" + id + ",\"category\":{\"id\":0,\"name\":\"string\"},\"name\":\"" + update_name + "\",\"photoUrls\":[\"string\"],\"tags\":[{\"id\":0,\"name\":\"string\"}],\"status\":\"" + update_status + "\"}";
-        String output[] = put_request(URL, data);
-        return output;
+        return request.rest_request(URL, data_out, content_type, request_type);
     }
 
     //POST /pet/{petID}
-    public String[] post_pet_formData(int id, String update_name, String update_status){
-        int status = 0;
+    public String[] update_pet_formData(int ID, String UPDATE_NAME, String UPDATE_STATUS){
+        URL = (URL + ID);
+        String request_type = ("POST");
+        String data_out = ("name=" + UPDATE_NAME + "&status=" + UPDATE_STATUS);
+        String content_type = ("urlencoded");
 
-        BufferedReader reader;
-        String line;
-        String message = ("Error");
-        StringBuffer responseContent = new StringBuffer();
-
-        try {
-            URL url = new URL("https://petstore.swagger.io/v2/pet/" + id);
-            connection = (HttpURLConnection) url.openConnection();
-
-            connection.setRequestMethod("POST");
-            connection.setDoOutput(true);
-            connection.setRequestProperty("Accept", "application/json");
-            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-
-            String data = ("name=" + update_name + "&status=" + update_status);
-
-            byte[] out = data.getBytes(StandardCharsets.UTF_8);
-
-            OutputStream stream =  connection.getOutputStream();
-            stream.write(out);
-
-            status = connection.getResponseCode();
-
-            reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            while ((line = reader.readLine()) != null){
-                responseContent.append(line);
-            }
-
-            reader.close();
-
-            message =  responseContent.toString();
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        String output[] = new String [2];
-
-        output[0] = message;
-        output[1] = Integer.toString(status);
-
-        return output;
+        return request.rest_request(URL, data_out, content_type, request_type);
     }
 
-    public String[] put_request(String URL, String data) {
-        int status = 0;
+    //DELETE /pet/{petID}
+    public String[] delete_pet(int ID){
+        URL = (URL + ID);
+        String request_type = ("DELETE");
+        String data_out = ("Nothing");
+        String content_type = ("json");
 
-        BufferedReader reader;
-        String line;
-        String message = ("Error");
-        StringBuffer responseContent = new StringBuffer();
-
-
-        try {
-            URL url = new URL(URL);
-            connection = (HttpURLConnection) url.openConnection();
-
-            connection.setRequestMethod("PUT");
-            connection.setDoOutput(true);
-            connection.setRequestProperty("Accept", "application/json");
-            connection.setRequestProperty("Content-Type", "application/json");
-
-            byte[] out = data.getBytes(StandardCharsets.UTF_8);
-
-            OutputStream stream = connection.getOutputStream();
-            stream.write(out);
-
-            status = connection.getResponseCode();
-
-            reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            while ((line =  reader.readLine()) != null){
-                responseContent.append(line);
-            }
-
-            reader.close();
-
-            message = responseContent.toString();
-
-
-
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        String[] output = new String [2];
-
-        output[0] = message;
-        output[1] = Integer.toString(status);
-
-        return output;
-
+        return request.rest_request(URL, data_out, content_type, request_type);
     }
 
-    public String[] delete_request(String URL){
-        int status = 0;
+    //PUT /pet
+    public String[] update_pet(int ID, String UPDATE_NAME, String UPDATE_STATUS){
+        String request_type = ("PUT");
+        String data_out = "{\"id\":" + ID + ",\"category\":{\"id\":0,\"name\":\"string\"},\"name\":\"" + UPDATE_NAME + "\",\"photoUrls\":[\"string\"],\"tags\":[{\"id\":0,\"name\":\"string\"}],\"status\":\"" + UPDATE_STATUS + "\"}";
+        String content_type =  ("json");
 
-        BufferedReader reader;
-        String line;
-        String message = ("Error");
-        StringBuffer responseContent = new StringBuffer();
-
-
-        try {
-            URL url = new URL(URL);
-            connection = (HttpURLConnection) url.openConnection();
-
-            connection.setRequestMethod("DELETE");
-            connection.setConnectTimeout(5000);
-            connection.setReadTimeout(5000);
-
-            reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-
-            while ((line = reader.readLine()) != null){
-                responseContent.append(line);
-            }
-
-            reader.close();
-
-            message = (responseContent.toString());
-
-            status = connection.getResponseCode();
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        String[] output = new String[2];
-
-        output[0] = message;
-        output[1] = Integer.toString(status);
-
-        return output;
+        return request.rest_request(URL, data_out, content_type, request_type);
     }
-
-    public String[] post_request(String URL, String data){
-        int status = 0;
-
-        BufferedReader reader;
-        String line;
-        String message = "Error";
-        StringBuffer responseContent = new StringBuffer();
-
-        try {
-            java.net.URL url = new URL(URL);
-            connection = (HttpURLConnection) url.openConnection();
-
-            connection.setRequestMethod("POST");
-            connection.setDoOutput(true);
-            connection.setRequestProperty("Accept", "application/json");
-            connection.setRequestProperty("Content-Type", "application/json");
-
-
-            byte[] out = data.getBytes(StandardCharsets.UTF_8);
-
-            OutputStream stream = connection.getOutputStream();
-            stream.write(out);
-
-            status = connection.getResponseCode();
-
-            reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            while ((line = reader.readLine()) != null){
-                responseContent.append(line);
-            }
-
-            reader.close();
-
-            message = responseContent.toString();
-
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        String[] output = new String [2];
-
-        output[0] = message;
-        output[1] = Integer.toString(status);
-
-        return output;
-    }
-
-
-
-    public String[] get_request(String URL){
-        int status = 0;
-        BufferedReader reader;
-        String line;
-        String message = "Error";
-        StringBuffer responseContent = new StringBuffer();
-
-        try {
-            URL url = new URL (URL);
-            connection = (HttpURLConnection) url.openConnection();
-
-            connection.setRequestMethod("GET");
-            connection.setConnectTimeout(5000);
-            connection.setReadTimeout(5000);
-
-            status = connection.getResponseCode();
-
-            reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-
-            while ((line = reader.readLine()) != null) {
-                responseContent.append(line);
-            }
-
-            reader.close();
-
-            message = responseContent.toString();
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        String[] output = new String[2];
-
-        output[0] = message;
-        output[1] = Integer.toString(status);
-
-        return output;
-    }
-
-
 }

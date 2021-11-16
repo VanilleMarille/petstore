@@ -9,24 +9,24 @@ import java.util.List;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class testcase_pet_3 {
 
-    private pet petstore;
+    private pet pet_store;
 
     //Test-Data
-    int id = 255;
-    String post_name = "Hund";
-    String post_status = "pending";
-    String update_name = "Katze";
-    String update_status = "sold";
+    int ID = 255;
+    String NAME = "Hund";
+    String PET_STATUS = "pending";
+    String UPDATE_NAME = "Cat";
+    String UPDATE_STATUS = "sold";
 
     @BeforeEach
-    public void init() { petstore = new pet();}
+    public void init() { pet_store = new pet();}
 
     @Test
     @Order(1)
-    @DisplayName("Post Pet")
+    @DisplayName("Add Pet")
 
     void post_pet() {
-        String output[] = petstore.post_pet(id, post_name, post_status);
+        String output[] = pet_store.add_pet(ID, NAME, PET_STATUS);
         int status = Integer.parseInt(output[1]);
 
         Assertions.assertEquals(200, status);
@@ -36,7 +36,7 @@ public class testcase_pet_3 {
     @Order(2)
     @DisplayName("Update Pet Name and Status with form data")
     void update_pet_formData (){
-        String output[] = petstore.post_pet_formData(id, update_name, update_status);
+        String output[] = pet_store.update_pet_formData(ID, UPDATE_NAME, UPDATE_STATUS);
         int status = Integer.parseInt(output[1]);
 
         String return_message = output[0];
@@ -53,22 +53,22 @@ public class testcase_pet_3 {
     @Order(3)
     @DisplayName("Find Pet by Status and check if updated")
     void find_by_status () {
-
-        String output[] = petstore.get_pet_byStatus(update_status);
+        String FIND_STATUS = UPDATE_STATUS;
+        String output[] = pet_store.get_pet_byStatus(FIND_STATUS);
         int status = Integer.parseInt(output[1]);
         String return_message = output[0];
 
         System.out.println(return_message);
 
-        List<String> updated_pet = JsonPath.read(return_message, "$..[?(@.id==" + id + ")]");
+        List<String> UPDATED_PET = JsonPath.read(return_message, "$..[?(@.id==" + ID + ")]");
 
-        List<String> get_status = JsonPath.read(updated_pet, "$..status");
-        String current_status = get_status.toString();
-        Assertions.assertEquals("[\"" + update_status + "\"]", current_status );
+        List<String> get_status = JsonPath.read(UPDATED_PET, "$..status");
+        String CURRENT_STATUS = get_status.toString();
+        Assertions.assertEquals("[\"" + FIND_STATUS + "\"]", CURRENT_STATUS );
 
-        List<String> get_names = JsonPath.read(updated_pet, "$..name");
-        String current_name = get_names.toString().substring(2).split("\"")[0];
-        Assertions.assertEquals(update_name, current_name);
+        List<String> get_names = JsonPath.read(UPDATED_PET, "$..name");
+        String CURRENT_NAME = get_names.toString().substring(2).split("\"")[0];
+        Assertions.assertEquals(UPDATE_NAME, CURRENT_NAME);
 
     }
 
@@ -76,7 +76,7 @@ public class testcase_pet_3 {
     @Order(4)
     @DisplayName("Delete Pet")
     void delete_pet(){
-        String output[] = petstore.get_pet_byID(id);
+        String output[] = pet_store.delete_pet(ID);
         int status = Integer.parseInt(output[1]);
 
         Assertions.assertEquals(200, status);}

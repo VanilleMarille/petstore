@@ -8,23 +8,23 @@ import petstore.pet;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class testcase_pet_2 {
 
-    private pet petstore;
+    private pet pet_store;
 
     //Test-Data
-    int id = 255;
-    String post_name = "KATZE";
-    String post_status = "sold";
-    String update_name = "HUND";
-    String update_status = "pending";
+    int ID = 255;
+    String NAME = "CAT";
+    String PET_STATUS = "sold";
+    String UPDATE_NAME = "HUND";
+    String UPDATE_STATUS = "pending";
 
     @BeforeEach
-    public void init() { petstore = new pet();}
+    public void init() { pet_store = new pet();}
 
     @Test
     @Order(1)
-    @DisplayName("Post Pet")
+    @DisplayName("Add Pet")
     void post_pet() {
-        String output[] = petstore.post_pet(id, post_name, post_status);
+        String[] output = pet_store.add_pet(ID, NAME, PET_STATUS);
         int status = Integer.parseInt(output[1]);
 
         Assertions.assertEquals(200, status);
@@ -35,7 +35,7 @@ public class testcase_pet_2 {
     @Order(2)
     @DisplayName("Update Pet Name and Status with PUT")
     void update_pet() {
-        String output[] = petstore.update_pet_put(id, update_name, update_status);
+        String[] output = pet_store.update_pet(ID, UPDATE_NAME, UPDATE_STATUS);
         int status = Integer.parseInt(output[1]);
 
         Assertions.assertEquals(200, status);
@@ -45,24 +45,22 @@ public class testcase_pet_2 {
     @Order(3)
     @DisplayName("Check if Pet ist updated")
     void check_updated_pet() {
-        String output[] = petstore.get_pet_byID(id);
-        int status =  Integer.parseInt(output[1]);
+        String[] output = pet_store.get_pet_byID(ID);
         String return_message = output[0];
 
-        String current_name = JsonPath.read(return_message, "$.name");
-        String current_status = JsonPath.read(return_message, "$.status");
+        String CURRENT_NAME = JsonPath.read(return_message, "$.name");
+        String CURRENT_STATUS = JsonPath.read(return_message, "$.status");
 
-        Assertions.assertEquals(update_name, current_name);
-        Assertions.assertEquals(update_status, current_status);
+        Assertions.assertEquals(UPDATE_NAME, CURRENT_NAME);
+        Assertions.assertEquals(UPDATE_STATUS, CURRENT_STATUS);
     }
 
     @Test
     @Order(4)
     @DisplayName("Delete Pet")
     void delete_pet() {
-        String output[] = petstore.delete_pet(id);
+        String[] output = pet_store.delete_pet(ID);
         int status = Integer.parseInt(output[1]);
-        String return_message = output[0];
 
         Assertions.assertEquals(200, status);
     }
