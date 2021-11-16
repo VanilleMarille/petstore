@@ -4,32 +4,38 @@ import com.jayway.jsonpath.JsonPath;
 import org.junit.jupiter.api.*;
 import petstore.user;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class testcase_user_2 {
-    private user petstore;
 
+
+    /////////////////////
     //Test-Data
-    int id = 257;
-    String username = "Kuchen99";
-    String firstname = "Franz";
-    String lastname  = "Glanz";
-    String email = "FranzGlanz@email.com";
-    String password = "old1234";
-    String phone = "06761234";
+    int ID = 257;
+    String USERNAME = "obst123";
+    String FIRSTNAME = "Ban";
+    String LASTNAME  = "Anne";
+    String EMAIL = "BanAnne@email.com";
+    String PASSWORD = "old1234";
+    String PHONE = "06761234";
 
-    String new_firstname = "Tom";
-    String new_lastname = "Arte";
-    String new_email = "TomArte@email.com";
-    String new_password = "new1234";
-    String new_phone = "06641234";
+    String NEW_FIRSTNAME = "Tom";
+    String NEW_LASTNAME = "Arte";
+    String NEW_EMAIL = "TomArte@email.com";
+    String NEW_PASSWORD = "new1234";
+    String NEW_PHONE = "06641234";
+    /////////////////////
+
+
+    private user pet_store;
 
     @BeforeEach
-    public void init() { petstore = new user();}
+    public void init() { pet_store = new user();}
 
     @Test
     @Order(1)
     @DisplayName("Create User")
     void create_user() {
-        String output[] = petstore.post_new_user(id, username, firstname,lastname,email,password,phone);
+        String[] output = pet_store.post_new_user(ID, USERNAME, FIRSTNAME, LASTNAME, EMAIL, PASSWORD, PHONE);
         int status = Integer.parseInt(output[1]);
 
         Assertions.assertEquals(200, status);
@@ -40,10 +46,9 @@ public class testcase_user_2 {
     @Test
     @Order(2)
     @DisplayName("Update user with put")
-    void update_user_with_put() {
-        String output[] = petstore.update_user(id, username,new_firstname,new_lastname,new_email,new_password,new_phone);
+    void update_user() {
+        String[] output = pet_store.update_user(ID, USERNAME, NEW_FIRSTNAME, NEW_LASTNAME, NEW_EMAIL, NEW_PASSWORD, NEW_PHONE);
         int status = Integer.parseInt(output[1]);
-        String return_message = output[0];
 
         Assertions.assertEquals(200, status);
     }
@@ -52,30 +57,30 @@ public class testcase_user_2 {
     @Order(3)
     @DisplayName("Check if user is updated")
     void check_if_updated() {
-        String output[] = petstore.get_user_by_username(username);
+        String[] output = pet_store.get_user_by_username(USERNAME);
         int status = Integer.parseInt(output[1]);
         String return_message = output[0];
 
-        String current_firstname = JsonPath.read(return_message, "$.firstName");
-        String current_lastname = JsonPath.read(return_message, "$.lastName");
-        String current_email = JsonPath.read(return_message, "$.email");
-        String current_password = JsonPath.read(return_message, "$.password");
-        String current_phone = JsonPath.read(return_message, "$.phone");
+        String CURRENT_FIRSTNAME = JsonPath.read(return_message, "$.firstName");
+        String CURRENT_LASTNAME = JsonPath.read(return_message, "$.lastName");
+        String CURRENT_EMAIL = JsonPath.read(return_message, "$.email");
+        String CURRENT_PASSWORD = JsonPath.read(return_message, "$.password");
+        String CURRENT_PHONE = JsonPath.read(return_message, "$.phone");
 
-        Assertions.assertEquals(new_firstname, current_firstname);
-        Assertions.assertEquals(new_lastname, current_lastname);
-        Assertions.assertEquals(new_email, current_email);
-        Assertions.assertEquals(new_password, current_password);
-        Assertions.assertEquals(new_phone, current_phone);
+        Assertions.assertEquals(200, status);
+        Assertions.assertEquals(NEW_FIRSTNAME, CURRENT_FIRSTNAME);
+        Assertions.assertEquals(NEW_LASTNAME, CURRENT_LASTNAME);
+        Assertions.assertEquals(NEW_EMAIL, CURRENT_EMAIL);
+        Assertions.assertEquals(NEW_PASSWORD, CURRENT_PASSWORD);
+        Assertions.assertEquals(NEW_PHONE, CURRENT_PHONE);
     }
 
     @Test
     @Order(4)
     @DisplayName("Delete updated user")
     void delete_updated_user() {
-        String output[] = petstore.delete_user(username);
+        String[] output = pet_store.delete_user(USERNAME);
         int status = Integer.parseInt(output[1]);
-        String return_message = output[0];
 
         Assertions.assertEquals(200, status);
     }
