@@ -85,5 +85,15 @@ public class testcase_store_2 {
         Assertions.assertEquals(404, status);
 
     }
+
+    @Test
+    @Order(6)
+    @DisplayName("Delete Pet")
+    void delete_pet(){
+        String[] output = add_pet.delete_pet(ID);
+        int status = Integer.parseInt(output[1]);
+
+        Assertions.assertEquals(200, status);
+    }
 }
 
