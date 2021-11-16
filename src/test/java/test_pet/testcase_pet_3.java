@@ -3,20 +3,22 @@ package test_pet;
 import com.jayway.jsonpath.JsonPath;
 import org.junit.jupiter.api.*;
 import petstore.pet;
-
 import java.util.List;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class testcase_pet_3 {
 
-    private pet pet_store;
 
+    /////////////////////
     //Test-Data
     int ID = 255;
     String NAME = "Hund";
     String PET_STATUS = "pending";
     String UPDATE_NAME = "Cat";
     String UPDATE_STATUS = "sold";
+    /////////////////////
+
+    private pet pet_store;
 
     @BeforeEach
     public void init() { pet_store = new pet();}

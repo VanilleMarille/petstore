@@ -4,18 +4,18 @@ import com.jayway.jsonpath.JsonPath;
 import org.junit.jupiter.api.*;
 import petstore.pet;
 
-
-@Tag("development")
-@Tag("stable")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class testcase_pet_1 {
 
-    private pet pet_store;
 
+    /////////////////////
     //Test-Data
     int ID = 355;
     String NAME = "Kuchen";
     String PET_STATUS = "pending";
+    /////////////////////
+
+    private pet pet_store;
 
     @BeforeEach
     public void init() { pet_store = new pet(); }

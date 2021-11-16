@@ -8,14 +8,17 @@ import petstore.pet;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class testcase_pet_2 {
 
-    private pet pet_store;
 
+    /////////////////////
     //Test-Data
     int ID = 255;
     String NAME = "CAT";
     String PET_STATUS = "sold";
     String UPDATE_NAME = "HUND";
     String UPDATE_STATUS = "pending";
+    /////////////////////
+
+    private pet pet_store;
 
     @BeforeEach
     public void init() { pet_store = new pet();}
