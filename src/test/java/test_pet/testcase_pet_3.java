@@ -26,7 +26,7 @@ public class testcase_pet_3 {
     @DisplayName("Add Pet")
 
     void post_pet() {
-        String output[] = pet_store.add_pet(ID, NAME, PET_STATUS);
+        String[] output = pet_store.add_pet(ID, NAME, PET_STATUS);
         int status = Integer.parseInt(output[1]);
 
         Assertions.assertEquals(200, status);
@@ -36,7 +36,7 @@ public class testcase_pet_3 {
     @Order(2)
     @DisplayName("Update Pet Name and Status with form data")
     void update_pet_formData (){
-        String output[] = pet_store.update_pet_formData(ID, UPDATE_NAME, UPDATE_STATUS);
+        String[] output = pet_store.update_pet_formData(ID, UPDATE_NAME, UPDATE_STATUS);
         int status = Integer.parseInt(output[1]);
 
         String return_message = output[0];
@@ -54,8 +54,7 @@ public class testcase_pet_3 {
     @DisplayName("Find Pet by Status and check if updated")
     void find_by_status () {
         String FIND_STATUS = UPDATE_STATUS;
-        String output[] = pet_store.get_pet_byStatus(FIND_STATUS);
-        int status = Integer.parseInt(output[1]);
+        String[] output = pet_store.get_pet_byStatus(FIND_STATUS);
         String return_message = output[0];
 
         System.out.println(return_message);
@@ -76,7 +75,7 @@ public class testcase_pet_3 {
     @Order(4)
     @DisplayName("Delete Pet")
     void delete_pet(){
-        String output[] = pet_store.delete_pet(ID);
+        String[] output = pet_store.delete_pet(ID);
         int status = Integer.parseInt(output[1]);
 
         Assertions.assertEquals(200, status);}
