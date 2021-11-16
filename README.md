@@ -49,6 +49,7 @@ testcase_store_2:
 * Get order by ID and check quantity
 * Delete order by ID
 * Check if order is delete
+* Delete Pet
   
 ### Testing /user
   
