@@ -79,10 +79,10 @@ public class request {
                     System.out.println("Fatal Error - IOException - continuing");
                     break;
                 }
-            } finally {
-                connection.disconnect();
             }
         }
+
+        connection.disconnect();
 
         String[] output = new String[2];
 
