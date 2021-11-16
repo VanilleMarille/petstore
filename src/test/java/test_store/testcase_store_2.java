@@ -48,7 +48,6 @@ public class testcase_store_2 {
         String return_message = output[0];
 
         Assertions.assertEquals(200, status);
-        System.out.println(return_message);
     }
 
     @Test

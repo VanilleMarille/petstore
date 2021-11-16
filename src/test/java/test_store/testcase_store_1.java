@@ -49,10 +49,8 @@ public class testcase_store_1 {
         int status = Integer.parseInt(output[1]);
         String return_message = output[0];
 
-        System.out.println(output[0]);
 
         int GET_STATUS = JsonPath.read(return_message, "$." + PET_STATUS);
-        System.out.println(GET_STATUS);
 
         Assertions.assertEquals(1, GET_STATUS);
         Assertions.assertEquals(200, status);
@@ -65,7 +63,6 @@ public class testcase_store_1 {
         String[] output = pet_store.post_order_for_pet(ID, PET_ID, QUANTITY);
         int status = Integer.parseInt(output[1]);
 
-        System.out.println(output[0]);
         Assertions.assertEquals(200, status);
     }
 
