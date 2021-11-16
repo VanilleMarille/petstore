@@ -7,9 +7,11 @@ The Testcases are using the Junit testing framework.
 
 External libraries used: com.jayway.jsonpath.JsonPath
 
-Implementation of the petstore are stored under src/main/java/petstore
+Class for calling REST requests is stored under src/main/java/REST
 
-Implementation of the testcases are stored under src/test/java
+The implementation of the petstore is stored under src/main/java/petstore
+
+The implementations of the testcases are stored under src/test/java
 
 ## Testcases
 
