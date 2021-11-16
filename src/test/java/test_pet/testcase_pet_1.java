@@ -56,7 +56,6 @@ public class testcase_pet_1 {
         int status = Integer.parseInt(output[1]);
 
         Assertions.assertEquals(200, status);
-
     }
 
 
