@@ -44,11 +44,7 @@ public class testcase_pet_3 {
         String return_message = output[0];
 
 
-        System.out.println(status);
-        System.out.println(return_message);
         Assertions.assertEquals(200, status);
-
-
     }
 
     @Test
@@ -59,7 +55,6 @@ public class testcase_pet_3 {
         String[] output = pet_store.get_pet_byStatus(FIND_STATUS);
         String return_message = output[0];
 
-        System.out.println(return_message);
 
         List<String> UPDATED_PET = JsonPath.read(return_message, "$..[?(@.id==" + ID + ")]");
 
