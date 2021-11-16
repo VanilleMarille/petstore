@@ -66,7 +66,7 @@ public class request {
 
                 break;
             } catch (MalformedURLException e) {
-                System.out.println("Error - MalformedURLException");
+                System.out.println("Error - MalformedURLException - retrying");
                 max_try--;
                 if (max_try == 0){
                     System.out.println("Fatal Error - MalformedURLException - continuing");
