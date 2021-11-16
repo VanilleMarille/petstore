@@ -23,10 +23,8 @@ public class request {
         String message = "ERROR";
         StringBuffer responseContent = new StringBuffer();
 
-        String debug_message = "DEBUG 1";
 
        try {
-           debug_message = "DEBUG 1.1";
            URL url = new URL(URL);
            connection = (HttpURLConnection) url.openConnection();
 
@@ -38,18 +36,10 @@ public class request {
 
            if(content_type.equals("urlencoded")){
                connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-
-               debug_message = "DEBUG 2.1";
-
            }else if (content_type.equals("json")){
                connection.setRequestProperty("Content-Type", "application/json");
-
-               debug_message = "DEBUG 2.2";
-
            }else{
                System.out.println("Error - content_type not known");
-
-               debug_message = "DEBUG 2.3";
            }
 
 
@@ -59,13 +49,8 @@ public class request {
                byte[] out = data_out.getBytes(StandardCharsets.UTF_8);
                OutputStream stream = connection.getOutputStream();
                stream.write(out);
-
-               debug_message = "DEBUG 3.1";
-
            }else if((!(request_type.equals("DELETE") || request_type.equals("GET")))){
                System.out.println("Error - request_type not known");
-
-               debug_message = "DEBUG 3.2";
            }
 
            status = connection.getResponseCode();
@@ -86,11 +71,10 @@ public class request {
            e.printStackTrace();
        }
 
-       String[] output = new String[3];
+       String[] output = new String[2];
 
        output[0] = message;
        output[1] = Integer.toString(status);
-       output[2] = debug_message;
 
        return output;
 
