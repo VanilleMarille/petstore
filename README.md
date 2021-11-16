@@ -36,15 +36,19 @@ testcase_pet_3:
 ### Testing /store
 
 testcase_store_1:
-* Get store inventory
-* Get order by ID
+* Add new pet with unique status
+* Get store inventory and check for unique status
+* Place order for pet
 * Delete order by ID
+* Delete Pet
     
     
 testcase_store_2:
+* Add new Pet
 * Place order for pet with quantity
 * Get order by ID and check quantity
 * Delete order by ID
+* Check if order is delete
   
 ### Testing /user
   
